@@ -5,6 +5,8 @@ import QRCodeDisplay from './QrDisplay';
 const ItemForm = () => {
   const [itemName, setItemName] = useState('');
   const [itemId, setItemId] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
 
   const handleItemNameChange = (e) => {
     setItemName(e.target.value);
@@ -12,11 +14,17 @@ const ItemForm = () => {
 
   const handleAddItem = async () => {
     try {
+      setLoading(true);
+      setError(null);
+
       const response = await axios.post('/addItem', { name: itemName });
-      setItemId(response.data.itemId); 
+      setItemId(response.data.itemId);
       setItemName('');
     } catch (error) {
-      console.error(error);
+      console.error('Error adding item:', error);
+      setError('Error adding item. Please try again.');
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -28,7 +36,10 @@ const ItemForm = () => {
         value={itemName}
         onChange={handleItemNameChange}
       />
-      <button onClick={handleAddItem}>Add Item</button>
+      <button onClick={handleAddItem} disabled={loading}>
+        {loading ? 'Adding...' : 'Add Item'}
+      </button>
+      {error && <p style={{ color: 'red' }}>{error}</p>}
       {itemId && <QRCodeDisplay itemId={itemId} />}
     </div>
   );
