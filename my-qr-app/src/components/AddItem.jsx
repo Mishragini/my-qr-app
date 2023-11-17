@@ -17,7 +17,7 @@ const ItemForm = () => {
       setLoading(true);
       setError(null);
 
-      const response = await axios.post('/addItem', { name: itemName });
+      const response = await axios.post('http://localhost:3001/addItem', { name: itemName });
       setItemId(response.data.itemId);
       setItemName('');
     } catch (error) {
