@@ -7,7 +7,7 @@ const QRCodeDisplay = ({ itemId }) => {
   useEffect(() => {
     const generateQRCode = async () => {
       try {
-        const response = await axios.get(`/generateQR/${itemId}`);
+        const response = await axios.get(`http://localhost:3001/generateQR/${itemId}`);
         setQRCode(response.data);
       } catch (error) {
         console.error(error);
