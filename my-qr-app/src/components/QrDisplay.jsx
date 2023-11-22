@@ -8,8 +8,15 @@ const QRCodeDisplay = ({ itemId }) => {
   useEffect(() => {
     const generateQRCode = async () => {
       try {
+       
         const response = await axios.get(`http://localhost:3001/generateQR/${itemId}`);
-        setQRCode(response.data);
+        const qrCodeData = response.data;
+
+      
+        const watermark = generateUniqueIdentifier();
+        const watermarkedQRCode = `${qrCodeData}?watermark=${watermark}`;
+
+        setQRCode(watermarkedQRCode);
       } catch (error) {
         console.error(error);
       }
@@ -17,6 +24,12 @@ const QRCodeDisplay = ({ itemId }) => {
 
     generateQRCode();
   }, [itemId]);
+
+
+  const generateUniqueIdentifier = () => {
+    
+    return Date.now().toString(36) + Math.random().toString(36).substr(2);
+  };
 
   return <QRCode value={qrCode} />;
 };
