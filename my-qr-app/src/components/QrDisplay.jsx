@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import QRCode from 'qrcode.react';
 
 const QRCodeDisplay = ({ itemId }) => {
   const [qrCode, setQRCode] = useState('');
@@ -17,7 +18,7 @@ const QRCodeDisplay = ({ itemId }) => {
     generateQRCode();
   }, [itemId]);
 
-  return <img src={qrCode} alt={`QR Code for Item ${itemId}`} />;
+  return <QRCode value={qrCode} />;
 };
 
 export default QRCodeDisplay;
