@@ -40,6 +40,10 @@ const ItemForm = () => {
         {loading ? 'Adding...' : 'Add Item'}
       </button>
       {error && <p style={{ color: 'red' }}>{error}</p>}
+      <br></br>
+      <br></br>
+      <br></br>
+
       {itemId && <QRCodeDisplay itemId={itemId} />}
     </div>
   );
